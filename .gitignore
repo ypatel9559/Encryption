@@ -1,23 +1,73 @@
-# Compiled class file
-*.class
+import java.util.Random;
+import java.util.Scanner;
 
-# Log file
-*.log
+class Main {
+  public static void main(String[] args) {
+    Scanner input = new Scanner (System.in);
+    String text="BaysideHS";
+    String backwards="";
+    String binary="";
+    String build="";
+    String[] random0={"001","000","010","100"};
+    String[] random1={"111","101","110","011"};   
+    String dcr=""; 
+    String s="";
+    String backwards2="";
 
-# BlueJ files
-*.ctxt
+    for(int y=text.length()-1;y>=0;y--){
+        backwards=backwards+text.charAt(y);
+      }
+      String firsthalf=backwards.substring(0,(backwards.length()/2));
+        String lasthalf=backwards.substring((backwards.length()/2),backwards.length());
+        String finals=lasthalf+firsthalf;
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+    for(int i=0;i<finals.length();i++){
+      char symbol=finals.charAt(i);
+      int ascii=(int)symbol;
+      binary+=0+Integer.toBinaryString(ascii);
+      }
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
+      for(int z=0;z<binary.length();z++){
+         char b=binary.charAt(z);
+         int num = new Random().nextInt(random0.length);
+         int num2 = new Random().nextInt(random1.length);
+         if(b=='0'){
+           build+=random0[num];
+         }else{
+           build+=random1[num2];
+         }
+      }
+      System.out.print("\n\n\u001b[33m ❉ ❉ ENCRYPTION ❉ ❉ \n\n"+build);
+ 
+    //DECRYPTION 
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+    for(int d=3;d<(build.length()+1);d+=3){
+      if(build.substring(d-3,d).equals("001")||build.substring(d-3,d).equals("000")||build.substring(d-3,d).equals("010")||build.substring(d-3,d).equals("100")){
+        dcr+="0";
+      }else{
+        dcr+="1";
+      }
+    }
+    for(int index = 8; index < dcr.length()+1; index+=8) {
+     String temp = dcr.substring(index-8, index);
+     int num = Integer.parseInt(temp,2);
+     char letter = (char) num;
+     s = s+letter;
+    }
+
+    String firsthalf2=s.substring(0,(s.length()/2));
+    String lasthalf2=s.substring((s.length()/2),s.length());
+    String finals2=lasthalf2+firsthalf2;
+        
+    for(int b=finals2.length()-1;b>=0;b--){
+        backwards2=backwards2+finals2.charAt(b);
+      }
+    
+    String lastlet=backwards2.substring(backwards2.length() - 1);
+    if((backwards2.length()%2)!=0){
+      System.out.println("\n\n\u001b[36m❉ ❉ DECRYPTION ❉ ❉\n\n"+lastlet+backwards2.substring(0,backwards2.length()-1));
+    }else{
+      System.out.println("\n\n\u001b[36m❉ ❉ DECRYPTION ❉ ❉\n\n"+backwards2);
+    }
+    }
+  }
